@@ -28,5 +28,5 @@ public class Experience {
 
     @ManyToOne
     @JoinColumn(name="id_user", referencedColumnName = "id")
-    private User user;
+    private UserCv userCv;
 }

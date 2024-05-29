@@ -3,9 +3,10 @@ package com.aos.curriculum.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.aos.curriculum.model.UserCv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aos.curriculum.model.User;
 import com.aos.curriculum.repository.UserRepository;
 
 @Service
@@ -17,21 +18,30 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserCv createUser(UserCv userCv) {
+        return userRepository.save(userCv);
     }
 
-    public List<User> retrieveUsers() {
+    public List<UserCv> retrieveUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> retrieveUserById(UUID id) {
+    public Optional<UserCv> retrieveUserById(UUID id) {
         return userRepository.findById(id);
     }
 
-    //TODO:
-    public User updateUser(UUID id, User user) {
-        return user;
+    public Optional<UserCv> updateUser(UUID id, UserCv updatedUserCv) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setName((updatedUserCv.getName() == null) ? user.getName() : updatedUserCv.getName());
+                    user.setEmail((updatedUserCv.getEmail() == null) ? user.getEmail() : updatedUserCv.getEmail());
+                    user.setAge((updatedUserCv.getAge() == null) ? user.getAge() : updatedUserCv.getAge());
+                    user.setWorking((updatedUserCv.getWorking() == null) ? user.getWorking() : updatedUserCv.getWorking());
+                    user.setCourses((updatedUserCv.getCourses() == null) ? user.getCourses() : updatedUserCv.getCourses());
+                    user.setExperiences((updatedUserCv.getExperiences() == null) ? user.getExperiences() : updatedUserCv.getExperiences());
+                    user.setLanguages((updatedUserCv.getLanguages() == null) ? user.getLanguages() : updatedUserCv.getLanguages());
+                    return userRepository.save(user);
+                });
     }
 
     public boolean deleteUser(UUID id) {

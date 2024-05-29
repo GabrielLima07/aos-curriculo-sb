@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class User {
+public class UserCv {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -25,17 +25,17 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    private int age;
+    private Integer age;
 
     @Column(nullable = false)
-    private boolean working;
+    private Boolean working;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userCv", cascade = CascadeType.ALL)
     private List<Course> courses;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userCv", cascade = CascadeType.ALL)
     private List<Language> languages;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userCv", cascade = CascadeType.ALL)
     private List<Experience> experiences;
 }

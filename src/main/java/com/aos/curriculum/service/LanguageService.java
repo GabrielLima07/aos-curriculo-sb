@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aos.curriculum.model.Language;
-import com.aos.curriculum.model.User;
 import com.aos.curriculum.repository.LanguageRepository;
 
 @Service
@@ -31,8 +30,14 @@ public class LanguageService {
     }
 
     //TODO:
-    public Language updateLanguage(UUID id, Language language) {
-        return language;
+    public Optional<Language> updateLanguage(UUID id, Language updatedLanguage) {
+        return languageRepository.findById(id)
+                .map(language -> {
+                    language.setLanguage((updatedLanguage.getLanguage() == null) ? language.getLanguage() : updatedLanguage.getLanguage());
+                    language.setLevel((updatedLanguage.getLevel() == null) ? language.getLevel() : updatedLanguage.getLevel());
+                    language.setUserCv((updatedLanguage.getUserCv() == null) ? language.getUserCv() : updatedLanguage.getUserCv());
+                    return languageRepository.save(language);
+                });
     }
 
     public boolean deleteLanguage(UUID id) {
