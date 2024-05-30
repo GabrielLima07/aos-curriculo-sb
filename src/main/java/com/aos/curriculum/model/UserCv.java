@@ -2,6 +2,8 @@ package com.aos.curriculum.model;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,11 +33,14 @@ public class UserCv {
     private Boolean working;
 
     @OneToMany(mappedBy = "userCv", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Course> courses;
 
     @OneToMany(mappedBy = "userCv", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Language> languages;
 
     @OneToMany(mappedBy = "userCv", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Experience> experiences;
 }
